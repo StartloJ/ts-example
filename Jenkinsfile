@@ -10,7 +10,7 @@ def getGitBranchName() {
   return scm.branches[0].name
 }
 
-def checkoutCode(Map args=[:]){
+def checkoutCode(Map args=[:]) {
   stage('Clone repository') {
     // CHECKOUT CODE REPO
     if(args.checkout_tag){
@@ -80,6 +80,17 @@ def prepareVars() {
 //   helmValuesFile = '${WORKSPACE}/.helm/${appName}-${envName}.yaml'
 //   helmWaitTimeout = '5m'
   // Tests variables
+}
+
+def compileAndRunUnitTest() {
+  stage('Unit Test') {
+    container('node') {
+      sh "npm ci"
+      sh "tslint --project ."
+      sh(script: "npm run test:ci", returnStdout: true).trim()
+      junit 'coverage/unit.xml'
+    }
+  }
 }
 
 podTemplate(
