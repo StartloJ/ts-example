@@ -93,6 +93,28 @@ def compileAndRunUnitTest() {
   }
 }
 
+def runOWASP() {
+  stage('OWASP scanner'){
+
+    def owaspOptions = []
+    owaspOptions.add("--scan 'src'")
+    owaspOptions.add("--out dependency-check-report.xml")
+    owaspOptions = owaspOptions.join(' ')
+
+    dependencycheck(
+      additionalArguments: owaspOptions,
+      odcInstallation: "owasp-scanner"
+    )
+
+    dependencyCheckPublisher(
+      pattern: 'dependency-check-report.xml'
+    )
+    // Cleanup report
+    sh "rm -f dependency-check-report.xml"
+
+  }
+}
+
 podTemplate(
   containers: [
     containerTemplate(name: 'node', image: 'node:16-alpine', command: 'cat', ttyEnabled: true),
