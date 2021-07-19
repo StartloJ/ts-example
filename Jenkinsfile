@@ -86,7 +86,7 @@ def compileAndRunUnitTest() {
   stage('Unit Test') {
     container('node') {
       sh "npm ci"
-      sh "tslint --project ."
+      sh "npm run lint"
       sh(script: "npm run test:ci", returnStdout: true).trim()
       junit 'coverage/unit.xml'
     }
