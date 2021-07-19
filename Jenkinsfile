@@ -117,7 +117,7 @@ podTemplate(
 
     switch(envName) {
       case 'ci':
-        // compileAndRunUnitTest()
+        compileAndRunUnitTest()
         // runOWASP()
         break
       case 'tag':
