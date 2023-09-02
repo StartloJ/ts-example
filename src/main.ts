@@ -9,7 +9,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(usersRouter);
 
 app.listen(PORT, () => {
-  return console.log(`⚡️[server]: Server is running at ${PORT}`);
+  return console.log(`⚡️[server]: Now server is running at ${PORT}`);
 });
 
 export default app;
