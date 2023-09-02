@@ -10,7 +10,13 @@ on:
 jobs:
   eslint:
     name: eslint
-    runs-on: ubuntu-latest
+    runs-on: 'ubuntu-latest'
+    timeout-minutes: 360
+    permissions:
+      actions: read
+      contents: read
+      packages: read
+      statuses: write
     steps:
     - uses: actions/checkout@v3
     - name: install node v18
